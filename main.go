@@ -1,13 +1,17 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"log"
+	"net/http"
+)
 
-// function that takes string argument and also returns string value
-func sayHello(name string) string {
-	return "Hello, " + name
+func helloWorld(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "Hello world \n")
 }
 
 func main() {
-	// calling the sayHello function along with passing the string value
-	fmt.Println(sayHello("Asman"))
+	http.HandleFunc("/", helloWorld)
+	fmt.Println("Server started and listening on localhost:9003")
+	log.Fatal(http.ListenAndServe(":9003", nil))
 }

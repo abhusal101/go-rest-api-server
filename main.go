@@ -1,17 +1,14 @@
 package main
 
-import (
-	"fmt"
-	"log"
-	"net/http"
-)
+import "fmt"
 
-func helloWorld(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hello world \n")
+func dimensions(length, width, height int) (area int, volume int) {
+	area = length * width
+	volume = length * width * height
+	return
 }
 
 func main() {
-	http.HandleFunc("/", helloWorld)
-	fmt.Println("Server started and listening on localhost:9003")
-	log.Fatal(http.ListenAndServe(":9003", nil))
+	area, volume := dimensions(5, 5, 5)
+	fmt.Println("area: ", area, ", volume:", volume)
 }

@@ -4,14 +4,30 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+
+	"github.com/gorilla/mux"
 )
 
-func helloWorld(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hello world \n")
+func getRequest(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "This is a GET. \n")
+}
+
+func postRequest(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "This is a POST. \n")
+}
+
+func deleteRequest(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "This is a DELETE. \n")
 }
 
 func main() {
-	http.HandleFunc("/", helloWorld)
-	fmt.Println("Server started and listening on localhost:9003")
-	log.Fatal(http.ListenAndServe(":9003", nil))
+	r := mux.NewRouter()
+
+	r.HandleFunc("/", getRequest).Methods("GET")
+	r.HandleFunc("/", postRequest).Methods("POST")
+	r.HandleFunc("/", deleteRequest).Methods("DELETE")
+
+	http.Handle("/", r)
+	fmt.Println("Server started and listening on localhost:9002")
+	log.Fatal(http.ListenAndServe(":9002", nil))
 }

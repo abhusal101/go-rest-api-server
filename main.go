@@ -16,23 +16,20 @@ type Dimension struct {
 Area() is the name of the method which does not take any arguments
 and Area() return one int type
 */
-func (d Dimension) Area() int {
+func (d *Dimension) Area() int {
+	d.height = 8
 	return d.length * d.width
 }
 
 func (d Dimension) Volume() int {
+	d.height = 6
 	return d.height * d.length * d.width
 }
 
 func main() {
-	x, y := 5, 10
-	n := &x         // setting the pointer "n" to the address of "x"
-	fmt.Println(*n) // while "n" is just pointing to the address of "x", when "*n" is called, it gives the exact value of the variable it is pointing to
-	*n = 50
-	fmt.Println(x)
-
-	t := &y //assigning the memory address of "y" to "t", so "t" is pointer to "y"
-	fmt.Println(*t)
-	*t = 100       // this will change the value of the "y", because "*t" points to the value and not just the memory address
-	fmt.Println(t) // this will only print the memory address
+	d := Dimension{10, 5, 6}
+	fmt.Println(d.Area())
+	fmt.Println(d) // after this line is run, we intend to get the output as {10 5 8} and we get it as desired, as we have used pointer to Dimension struct and that way we can manupilate the actual value
+	fmt.Println(d.Volume())
+	fmt.Println(d) // after this line is run, we intend to get the output as {10 5 6} but instead, it will still remain as {10 5 8}, because of Volume doesnt take the pointer to Dimesion
 }
